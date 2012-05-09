@@ -182,7 +182,7 @@ class ColorCycle {
 	
 		$selector = "gallery-{$instance}";
 	
-		$output = "<!-- colorcycle_gallery_shortcode()". var_export( $content )." -->
+		$output = "<!-- colorcycle_gallery_shortcode() -->
 			<div id='$selector' class='gallery galleryid-{$id}'>";
 	
 		$i = 0;
