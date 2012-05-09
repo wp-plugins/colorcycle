@@ -4,7 +4,7 @@ Plugin Name: ColorCycle
 Plugin URI: http://jacksonwhelan.com/plugins/colorcycle/
 Description: ColorCycle adds Colorbox for image enlargements, and creates slideshows of attached images using the Cycle plugin for jQuery.
 Author: Jackson
-Version: 1.4
+Version: 1.4.1
 Author URI: http://jacksonwhelan.com
 */
 
@@ -182,7 +182,7 @@ class ColorCycle {
 	
 		$selector = "gallery-{$instance}";
 	
-		$output = "<!-- colorcycle_gallery_shortcode()". var_export( $content )." -->
+		$output = "<!-- colorcycle_gallery_shortcode() -->
 			<div id='$selector' class='gallery galleryid-{$id}'>";
 	
 		$i = 0;

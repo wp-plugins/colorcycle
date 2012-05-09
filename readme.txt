@@ -2,7 +2,7 @@
 Contributors: madjax
 Tags: gallery, slideshow, colorbox, cycle, lightbox, jquery
 Tested up to: 3.3.2
-Stable tag: 1.4
+Stable tag: 1.4.1
 Requires at least: 3.2.1
 
 ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for image enlargements, and slideshows using the Cycle plugin for jQuery.
@@ -12,6 +12,9 @@ ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for i
 ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for image enlargements, and creates slideshows of attached images using the Cycle plugin for jQuery. The [gallery] shortcode is replaced with a Highslide powered gallery. An additional shortcode [slideshow] is provided. 
 
 == Changelog ==
+= 1.4.1 =
+* Remove debugging code in gallery shortcode
+
 = 1.4 =
 * Name change, replace Highslide with Colorbox
 
