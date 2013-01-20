@@ -1,0 +1,20 @@
+.gallery-item { float:left; margin-top:10px; text-align:center; }
+.jw-colorcycle-wrap { margin: 10px 0; }
+.jw-colorcycle { text-align: center; }
+.jw-colorcycle-thumbs { margin-bottom: 20px; }
+.jw-colorcycle-thumb { text-align: center; margin: 0; padding: 0; }
+.jw-colorcycle-thumb li { display: inline; padding: 5px; margin: 0; }
+.slide img { margin: 0 auto; }
+.jw-colorcycle-pager { text-align: center; }
+.jw-colorcycle-pager a { padding: 5px; }
+.cc-gallery-index { list-style: none; }
+.cc-gallery { float: left; }
+.cc-gallery-index .cc-active { font-weight: bold; }
+.clear { clear: both; }
+/* slightly enhanced, universal clearfix hack */
+.clearfix:after { visibility: hidden; display: block; font-size: 0; content: " ";     clear: both; height: 0; }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
