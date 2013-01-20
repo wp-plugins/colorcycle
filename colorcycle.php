@@ -17,7 +17,7 @@ class ColorCycle {
     }
     
     function uninstall() {
-		// Nothing here yet...
+		// Nothing here yet....
     }
     
     function ColorCycle() {
