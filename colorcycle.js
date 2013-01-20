@@ -1,17 +1,28 @@
 /*!
- * ColorCycle WordPress Plugin v1.4
+ * ColorCycle WordPress Plugin v1.5
  */
 var $jwcc = jQuery.noConflict();
+
 $jwcc(document).ready(function() {
-	$jwcc('.gallery a, .colorbox, .wp-caption a').colorbox();
-    var $jwccss = $jwcc('.jw-colorcycle').cycle({
+	$jwcc('body').addClass( 'cc-theme-' + color_cycle.theme );
+	$jwcc('.colorbox').colorbox( color_cycle.cb_opts );
+    var $jwccss = $jwcc('.jw-colorcycle');
+	
+	var pw = $jwccss.parent().outerWidth();
+	
+	if( color_cycle.width > pw  ) {
+		$jwccss.width( pw );
+		color_cycle.width = pw;	
+	}
+	
+    $jwccss.cycle({
 		fx: color_cycle.fx,
 		speed: parseInt(color_cycle.speed),
 		delay: parseInt(color_cycle.delay),
 		pause: parseInt(color_cycle.pause),
 		timeout: parseInt(color_cycle.timeout),
-		height: parseInt(color_cycle.height),
-		width: '100%',
+		height: color_cycle.height,
+		width: color_cycle.width,
 		pager: '.jw-cc-pages',
 		prev: '.jw-cc-prev',
 		next: '.jw-cc-next',
@@ -26,13 +37,16 @@ $jwcc(document).ready(function() {
 	        });
 	    });
 	}
+	
 });
 
-function verticalSlide(curr,next,opts) { 
-    var $slide = $jwcc(next); 
-    var sh = $slide.outerHeight(); 
-    var h = $slide.parent().outerHeight(); 
-    $slide.css({ 
-        marginTop: ( h - sh ) / 2, 
-    }); 
+function verticalSlide(curr,next,opts) {
+	if( color_cycle.forcevertical ) {
+	    var $slide = $jwcc(next); 
+	    var sh = $slide.outerHeight(); 
+	    var h = $slide.parent().outerHeight(); 
+	    $slide.css({ 
+	        marginTop: ( h - sh ) / 2, 
+	    }); 
+	}
 }; 

@@ -1,9 +1,9 @@
 === ColorCycle ===
 Contributors: madjax
 Tags: gallery, slideshow, colorbox, cycle, lightbox, jquery
-Tested up to: 3.3.2
-Stable tag: 1.4 
-Requires at least: 3.2.1
+Tested up to: 3.5
+Stable tag: 1.5.1
+Requires at least: 3.5
 
 ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for image enlargements, and slideshows using the Cycle plugin for jQuery.
 
@@ -12,6 +12,23 @@ ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for i
 ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for image enlargements, and creates slideshows of attached images using the Cycle plugin for jQuery. The [gallery] shortcode is replaced with a Highslide powered gallery. An additional shortcode [slideshow] is provided. 
 
 == Changelog ==
+= 1.5.1 =
+* 3.5 Compatibility Update
+* Additional Filters
+* WP Touch Aware
+* And More...
+* ColorBox 1.3.23 Update
+
+= 1.5 =
+* 3.5 Compatability
+
+= 1.4.1 =
+* Add new ccgallery shortcode
+* Allow id of parent to be specified in slideshow shortcode
+* Allow selection of images based on group attribute
+* More Colorbox options now available
+* General cleanup
+
 = 1.4 =
 * Name change, replace Highslide with Colorbox
 * Remove debugging code in gallery shortcode
@@ -56,7 +73,7 @@ Initial Release
 
 = What shortcodes are available? =
 
-[gallery]
+[gallery] or [ccgallery]*
 
 `
 'order'      => 'ASC',
@@ -68,6 +85,7 @@ Initial Release
 'columns'    => 3,
 'size'       => 'thumbnail'
 `
+* Note: WordPress replaces the gallery shortcode in the visual editor with a placeholder, making it difficult to edit attributes after publishing. Using the ccgallery shortcode will maintain visibility of your attributes.
 
 [slideshow] - Available attributes and defaults:
 
@@ -91,14 +109,20 @@ By default, only images which have been selected by using the drop down in the m
 Here's an example:
 `
 if( class_exists( 'ColorCycle' ) ) {
+	
+	$ColorCycle = new ColorCycle;
+	
 	$show = array(
 		'size' => 'home-slide',
 		'pager' => false,
 		'linkto' => 'url',
 		'speed' => 3000,
-		'timeout' => 1000
+		'timeout' => 1000,
+		'show' => all
 	);
-	echo $HighCycle->colorcycle_show( $show );
+	
+	echo $ColorCycle->colorcycle_show( $show );
+	
 }
 `
 = It doesn't look the way I want, how can I style the galleries and slideshows? =
