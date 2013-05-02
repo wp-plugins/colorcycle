@@ -4,7 +4,7 @@ Plugin Name: ColorCycle
 Plugin URI: http://colorcycle.jacksonwhelan.com
 Description: ColorCycle adds Colorbox for image enlargements, and creates slideshows of attached images using the Cycle plugin for jQuery.
 Author: Jackson
-Version: 1.5.1
+Version: 1.5.2
 Author URI: http://jacksonwhelan.com
 */
 
@@ -123,11 +123,11 @@ class ColorCycle {
 	
 	function image_attachment_fields_to_edit( $form_fields, $post ) {
 						
-		$form_fields["jw_cc_header"]['tr'] = '<tr><td colspan="2"><h4 class="media-sub-title">ColorCycle Options</h4></td></tr>';
+		$form_fields["jw_cc_header"]['tr'] = '<tr><td colspan="2"><h3>ColorCycle Options</h3></td></tr>';
 
 		$noselected = $selected = '';
 		
-		if( get_post_meta( $post->ID, "_jw_cc_ss_img", true ) == 'yes' ||  get_post_meta( $post->ID, "_jw_cc_ss_img", true ) != 'no' ) {
+		if( get_post_meta( $post->ID, "_jw_cc_ss_img", true ) == 'yes' ) {
 			$selected = " selected='selected'";
 		} else {
 			$noselected = " selected='selected'";
@@ -239,6 +239,28 @@ class ColorCycle {
 		_e( "Display gallery as slideshow", 'colorcycle' );
 		echo '</label> ';
 		echo '<input type="checkbox" id="cc_gall_ss" name="cc_gall_ss" value="1"'.$cc_gall_ss.'/>';
+		?>
+		
+		<input id="cc_media_ids" type="text" name="cc_media_ids" value="">
+		<a href="#" class="button cc_media_upload" title="Add Media">Add Media</a>			
+		<script type="text/javascript">
+			jQuery( '.cc_media_upload' ).click(function() {
+			    var clone = wp.media.gallery.shortcode;
+			    wp.media.gallery.shortcode = function(attachments) {
+				    images = attachments.pluck('id');
+				    jQuery( '#cc_media_ids' ).val(images);
+				    wp.media.gallery.shortcode = clone;
+				    var shortcode= new Object();
+				    shortcode.string = function() {return '[slideshow]'};
+				    return shortcode;
+				}
+				jQuery(this).blur();
+				wp.media.editor.open();
+				return false;       
+			});
+		</script>
+
+		<?php
 	}
 	
 	function cc_save_postdata( $post_id ) {
@@ -395,9 +417,17 @@ class ColorCycle {
 				unset( $attr['orderby'] );
 		}
 		
+		if ( ! empty( $attr['ids'] ) ) {
+			if ( empty( $attr['orderby'] ) )
+				$attr['orderby'] = 'post__in';
+			$attr['include'] = $attr['ids'];
+		}
+		
 		if( is_object( $wptouch_pro ) && $wptouch_pro->showing_mobile_theme ) {
 			$attr['size'] = 'medium';
 			$attr = apply_filters( 'cc_gallery_wpt_attr', $attr );
+		} else {
+			$attr = apply_filters( 'cc_gallery_attr', $attr );			
 		}
 	
 		extract( shortcode_atts( array(
@@ -418,7 +448,7 @@ class ColorCycle {
 			'cb_height' => false,
 			'name' => false,
 			'theme' => false,
-			'include' => '',
+			'ids' => '',
 			'exclude' => ''
 		), $attr ) );
 	
@@ -462,14 +492,14 @@ class ColorCycle {
 		
 		$args = apply_filters( 'cc_gallery_args', $args, $post->ID );
 				
-		if ( !empty($include) ) {
-			$args = array_merge( $args, array( 'include' => $include ) );
+		if ( !empty( $ids ) ) {
+			$args = array_merge( $args, array( 'include' => $ids ) );
 			$_attachments = get_posts( $args );
 				$attachments = array();
 			foreach ( $_attachments as $key => $val ) {
 				$attachments[$val->ID] = $_attachments[$key];
 			}
-		} elseif ( !empty($exclude) ) {
+		} elseif ( !empty( $exclude ) ) {
 			$args = array_merge( $args, array( 'exclude' => $exclude ) );
 			$attachments = get_children( $args );
 		} else {
@@ -546,6 +576,8 @@ class ColorCycle {
 		if( is_object( $wptouch_pro ) && $wptouch_pro->showing_mobile_theme ) {
 			$attr['size'] = 'medium';		
 			$attr = apply_filters( 'cc_show_wpt_attr', $attr );
+		} else {
+			$attr = apply_filters( 'cc_show_attr', $attr );			
 		}
 		
 		if ( ! empty( $attr['ids'] ) ) {
@@ -615,12 +647,14 @@ class ColorCycle {
 			'target' => false,
 			'forcevertical' => false,
 			'name' => false,
-			'include' => '',
+			'ids' => '',
 			'exclude' => '',
 			'cbslideshowspeed' => 10000
 		), $attr ) );
 		
 		$id = ( $id == 'null') ? null : intval( $id );
+		
+		$showthumbs = ( $showthumbs === 'true' );
 		
 		if( $name )
 			$id = $this->get_id_from_name( $name );
@@ -670,8 +704,8 @@ class ColorCycle {
 		
 		$args = apply_filters( 'cc_show_args', $args, $post->ID );
 		
-		if ( !empty($include) ) {
-			$args = array_merge( $args, array( 'include' => $include ) );
+		if ( !empty( $ids ) ) {
+			$args = array_merge( $args, array( 'include' => $ids ) );
 			$_attachments = get_posts( $args );
 				$attachments = array();
 			foreach ( $_attachments as $key => $val ) {
@@ -748,7 +782,7 @@ class ColorCycle {
 
 		if( $pager ) {
 		
-			$out.= '<div class="jw-colorcycle-pager"><a href="#jw-colorcycle-' . $post->ID . '-' . $cc_instance . '" class="jw-cc-prev">Previous</a> <span class="jw-cc-pages"> </span> <a href="#jw-colorcycle-' . $post->ID . '-' . $cc_instance . '" class="jw-cc-prev">Next</a></div>';
+			$out.= '<div class="jw-colorcycle-pager"><a href="#jw-colorcycle-' . $post->ID . '-' . $cc_instance . '" class="jw-cc-prev">Previous</a> <span class="jw-cc-pages"> </span> <a href="#jw-colorcycle-' . $post->ID . '-' . $cc_instance . '" class="jw-cc-next">Next</a></div>';
 			
 		}
 
