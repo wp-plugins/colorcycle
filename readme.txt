@@ -1,17 +1,21 @@
 === ColorCycle ===
 Contributors: madjax
 Tags: gallery, slideshow, colorbox, cycle, lightbox, jquery
-Tested up to: 3.5
-Stable tag: 1.5.1
+Tested up to: 3.5.1
+Stable tag: 1.5.2
 Requires at least: 3.5
 
 ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for image enlargements, and slideshows using the Cycle plugin for jQuery.
 
 == Description ==
 
-ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for image enlargements, and creates slideshows of attached images using the Cycle plugin for jQuery. The [gallery] shortcode is replaced with a Highslide powered gallery. An additional shortcode [slideshow] is provided. 
+ColorCycle is a gallery replacement plugin for WordPress. It adds Colorbox for image enlargements, and creates slideshows of attached images using the Cycle plugin for jQuery. The [gallery] shortcode is replaced with a Colorbox powered gallery. An additional shortcode [slideshow] is provided. 
 
 == Changelog ==
+= 1.5.2 =
+* 3.5 Media Gallery Improvements
+* Bug fix: showthumbs=false in shortcode works as expected
+
 = 1.5.1 =
 * 3.5 Compatibility Update
 * Additional Filters
